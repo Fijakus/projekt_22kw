@@ -3,6 +3,7 @@
 import { useBudget } from '@/lib/BudgetContext';
 import { formatCurrency, EXPENSE_CATEGORIES } from '@/lib/utils';
 import { useState } from 'react';
+import { Trash2 } from 'lucide-react';
 
 export default function LimitsView() {
   const { state, dispatch, getCategoryExpenses } = useBudget();
@@ -82,7 +83,7 @@ export default function LimitsView() {
                     <h3 style={{ fontSize: '1.2rem', marginBottom: '2px' }}>{b.category}</h3>
                   </div>
                 </div>
-                <button className="btn-icon" onClick={() => handleDelete(b.category)}>🗑️</button>
+                <button className="btn-icon" onClick={() => handleDelete(b.category)}><Trash2 size={16} /></button>
               </div>
 
               <div className="divider" />

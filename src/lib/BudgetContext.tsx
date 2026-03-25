@@ -19,9 +19,9 @@ import {
 /* ─── Default seed data ─── */
 const defaultState: AppState = {
   members: [
-    { id: 'm1', name: 'Tata', role: 'Tata', avatar: '👨', color: '#4f8ef7' },
-    { id: 'm2', name: 'Mama', role: 'Mama', avatar: '👩', color: '#ec4899' },
-    { id: 'm3', name: 'Dziecko', role: 'Dziecko', avatar: '👧', color: '#10d9a0' },
+    { id: 'm1', name: 'Tata', role: 'Tata', avatar: 'TT', color: '#4A6FA5' },
+    { id: 'm2', name: 'Mama', role: 'Mama', avatar: 'MA', color: '#9E768F' },
+    { id: 'm3', name: 'Dziecko', role: 'Dziecko', avatar: 'DZ', color: '#688E75' },
   ],
   transactions: [
     {
@@ -67,19 +67,19 @@ const defaultState: AppState = {
   ],
   goals: [
     {
-      id: 'g1', name: 'Wakacje letnie 🏖️', targetAmount: 8000,
+      id: 'g1', name: 'Wakacje letnie', targetAmount: 8000,
       savedAmount: 3200, deadline: '2026-07-01',
-      icon: '✈️', color: '#4f8ef7',
+      icon: 'Sun', color: '#4A6FA5',
     },
     {
-      id: 'g2', name: 'Nowy samochód 🚗', targetAmount: 35000,
+      id: 'g2', name: 'Nowy samochód', targetAmount: 35000,
       savedAmount: 12000, deadline: '2027-06-01',
-      icon: '🚗', color: '#8b5cf6',
+      icon: 'Car', color: '#9E768F',
     },
     {
       id: 'g3', name: 'Fundusz awaryjny', targetAmount: 15000,
       savedAmount: 9500, deadline: '2026-12-31',
-      icon: '🛡️', color: '#10d9a0',
+      icon: 'Shield', color: '#688E75',
     },
   ],
   budgetLimits: [

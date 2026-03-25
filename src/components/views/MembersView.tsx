@@ -1,10 +1,11 @@
 'use client';
 
 import { useBudget } from '@/lib/BudgetContext';
-import { formatCurrency, AVATAR_OPTIONS, COLOR_OPTIONS, monthLabel } from '@/lib/utils';
+import { formatCurrency, COLOR_OPTIONS, getInitials } from '@/lib/utils';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { FamilyMember } from '@/types/budget';
+import { Trash2 } from 'lucide-react';
 
 export default function MembersView() {
   const { state, dispatch, getMemberExpenses } = useBudget();
@@ -12,7 +13,6 @@ export default function MembersView() {
 
   const [name, setName] = useState('');
   const [role, setRole] = useState('');
-  const [avatar, setAvatar] = useState(AVATAR_OPTIONS[0]);
   const [color, setColor] = useState(COLOR_OPTIONS[0]);
 
   const handleAdd = (e: React.FormEvent) => {
@@ -23,7 +23,7 @@ export default function MembersView() {
       id: uuidv4(),
       name,
       role,
-      avatar,
+      avatar: getInitials(name),
       color,
     };
     dispatch({ type: 'ADD_MEMBER', payload: newMember });
@@ -33,7 +33,7 @@ export default function MembersView() {
   };
 
   const handleDelete = (id: string, name: string) => {
-    if (confirm(`Czy na pewno usunąć członka: ${name}? Spowoduje to również usunięcie ich transakcji.`)) {
+    if (confirm(`Czy na pewno usunąć członka: ${name}? Spowoduje to również usunięcie transakcji przypisanych do tej osoby.`)) {
       dispatch({ type: 'DELETE_MEMBER', payload: id });
     }
   };
@@ -43,50 +43,36 @@ export default function MembersView() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
         <div>
           <h1 style={{ marginBottom: '4px' }}>Zarządzanie Rodziną</h1>
-          <p className="text-secondary">Członkowie rodziny i ich wydatki (bieżący miesiąc).</p>
+          <p className="text-secondary">Zarządzaj domownikami i monitoruj ich bieżące wydatki.</p>
         </div>
         <button className="btn-primary" onClick={() => setIsAdding(!isAdding)}>
-          {isAdding ? 'Anuluj' : '+ Dodaj osobę'}
+          {isAdding ? 'Anuluj' : '+ Dodaj Osobę'}
         </button>
       </div>
 
       {isAdding && (
-        <div className="card mb-6 animate-slide">
-          <h3 className="mb-4">Nowy członek rodziny</h3>
+        <div className="card mb-6 animate-slide" style={{ padding: '32px' }}>
+          <h3 className="mb-4" style={{ fontWeight: 600, fontSize: '1.1rem' }}>Rejestracja nowego członka rodziny</h3>
           <form onSubmit={handleAdd} className="grid-2">
             <div className="flex-col gap-2">
-              <label>Imię</label>
-              <input type="text" value={name} onChange={e => setName(e.target.value)} required placeholder="Np. Jan" />
+              <label>Imię / Nazwa</label>
+              <input type="text" value={name} onChange={e => setName(e.target.value)} required placeholder="Np. Jan Kowalski" />
             </div>
             <div className="flex-col gap-2">
-              <label>Rola</label>
-              <input type="text" value={role} onChange={e => setRole(e.target.value)} required placeholder="Np. Tata, Syn" />
+              <label>Rola przypisana</label>
+              <input type="text" value={role} onChange={e => setRole(e.target.value)} required placeholder="Np. Ojciec, Administrator" />
             </div>
-            <div className="flex-col gap-2">
-              <label>Awatar</label>
-              <div className="flex gap-2" style={{ flexWrap: 'wrap' }}>
-                {AVATAR_OPTIONS.map(a => (
-                  <button 
-                    key={a} type="button" 
-                    className={`btn-icon ${avatar === a ? 'active' : ''}`}
-                    style={avatar === a ? { background: 'var(--accent-blue)', color: '#fff', borderColor: 'var(--accent-blue)' } : {}}
-                    onClick={() => setAvatar(a)}
-                  >
-                    {a}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="flex-col gap-2">
-              <label>Kolor akcentu</label>
+            
+            <div className="flex-col gap-2" style={{ gridColumn: '1 / -1' }}>
+              <label>Kolor identyfikacyjny</label>
               <div className="flex gap-2" style={{ flexWrap: 'wrap' }}>
                 {COLOR_OPTIONS.map(c => (
                   <div 
                     key={c} 
                     style={{ 
                       width: '32px', height: '32px', borderRadius: '50%', background: c, cursor: 'pointer',
-                      border: color === c ? '3px solid white' : 'none',
-                      boxShadow: color === c ? `0 0 10px ${c}` : 'none'
+                      border: color === c ? '3px solid white' : '2px solid transparent',
+                      boxShadow: color === c ? `0 0 10px ${c}50` : 'none'
                     }}
                     onClick={() => setColor(c)}
                   />
@@ -94,7 +80,7 @@ export default function MembersView() {
               </div>
             </div>
             <div className="flex justify-end mt-4" style={{ gridColumn: '1 / -1' }}>
-              <button type="submit" className="btn-primary">Zapisz</button>
+              <button type="submit" className="btn-primary">Zatwierdź Osobowość</button>
             </div>
           </form>
         </div>
@@ -104,25 +90,32 @@ export default function MembersView() {
         {state.members.map(m => {
           const exp = getMemberExpenses(m.id, state.selectedMonth);
           return (
-            <div key={m.id} className="card" style={{ borderTop: `3px solid ${m.color}` }}>
+            <div key={m.id} className="card" style={{ borderLeft: `5px solid ${m.color}`, position: 'relative' }}>
               <div className="flex justify-between items-start mb-4">
                 <div className="flex items-center gap-3">
-                  <div style={{ fontSize: '2.5rem', background: 'var(--bg-glass)', width: '64px', height: '64px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    {m.avatar}
+                  <div style={{ 
+                    fontSize: '1.2rem', fontWeight: 800, color: 'white', background: m.color, 
+                    width: '56px', height: '56px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' 
+                  }}>
+                    {getInitials(m.name)}
                   </div>
                   <div>
-                    <h3 style={{ fontSize: '1.2rem', marginBottom: '2px' }}>{m.name}</h3>
-                    <span className="badge" style={{ backgroundColor: `${m.color}20`, color: m.color }}>{m.role}</span>
+                    <h3 style={{ fontSize: '1.1rem', marginBottom: '4px', fontWeight: 600, color: 'var(--text-primary)' }}>{m.name}</h3>
+                    <span className="badge" style={{ backgroundColor: `var(--bg-glass)`, color: 'var(--text-secondary)', fontWeight: 600 }}>{m.role}</span>
                   </div>
                 </div>
-                <button className="btn-icon" onClick={() => handleDelete(m.id, m.name)}>🗑️</button>
+                <button className="btn-icon" style={{ padding: '6px', border: '1px solid transparent' }} onClick={() => handleDelete(m.id, m.name)}>
+                  <Trash2 size={16} color="var(--text-muted)" />
+                </button>
               </div>
 
-              <div className="divider" />
+              <div className="divider" style={{ borderTop: '1px solid var(--border)' }} />
               
-              <div className="flex-col gap-2 text-center" style={{ padding: '12px 0' }}>
-                <span className="text-secondary text-sm">Wydatki ({monthLabel(state.selectedMonth)})</span>
-                <span className="text-2xl font-bold text-red">-{formatCurrency(exp)}</span>
+              <div className="flex-col gap-2 p-2 rounded" style={{ background: 'var(--bg-primary)' }}>
+                <span className="text-secondary text-xs uppercase font-bold" style={{ letterSpacing: '0.05em' }}>Miesięczne Koszty</span>
+                <span className="text-2xl font-bold" style={{ color: 'var(--text-primary)'}}>
+                  {formatCurrency(exp)}
+                </span>
               </div>
             </div>
           );

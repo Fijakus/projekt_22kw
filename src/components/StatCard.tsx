@@ -1,11 +1,12 @@
 'use client';
 
+import React from 'react';
 import styles from './StatCard.module.css';
 
 interface StatCardProps {
   label: string;
   value: string;
-  icon: string;
+  icon: React.ReactNode;
   trend?: string;
   trendPositive?: boolean;
   accent?: 'green' | 'red' | 'blue' | 'orange' | 'purple';

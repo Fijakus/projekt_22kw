@@ -9,13 +9,17 @@ interface SidebarProps {
   onViewChange: (view: string) => void;
 }
 
+import { LayoutDashboard, ReceiptText, Users, Target, Activity, Wallet } from 'lucide-react';
+
 const NAV_ITEMS = [
-  { id: 'dashboard', icon: '📊', label: 'Dashboard' },
-  { id: 'transactions', icon: '💳', label: 'Transakcje' },
-  { id: 'members', icon: '👨‍👩‍👧‍👦', label: 'Rodzina' },
-  { id: 'goals', icon: '🎯', label: 'Cele' },
-  { id: 'limits', icon: '📉', label: 'Limity' },
+  { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+  { id: 'transactions', icon: ReceiptText, label: 'Transakcje' },
+  { id: 'members', icon: Users, label: 'Rodzina' },
+  { id: 'goals', icon: Target, label: 'Cele' },
+  { id: 'limits', icon: Activity, label: 'Limity' },
 ];
+
+import { Home } from 'lucide-react';
 
 export default function Sidebar({ activeView, onViewChange }: SidebarProps) {
   const { state, dispatch } = useBudget();
@@ -25,7 +29,7 @@ export default function Sidebar({ activeView, onViewChange }: SidebarProps) {
     <aside className={styles.sidebar}>
       {/* Logo */}
       <div className={styles.logo}>
-        <span className={styles.logoIcon}>🏠</span>
+        <Home size={32} className={styles.logoIcon} />
         <div>
           <div className={styles.logoTitle}>BudżetRodzinny</div>
           <div className={styles.logoSub}>Kalkulator domowy</div>
@@ -55,7 +59,7 @@ export default function Sidebar({ activeView, onViewChange }: SidebarProps) {
             className={`${styles.navItem} ${activeView === item.id ? styles.active : ''}`}
             onClick={() => onViewChange(item.id)}
           >
-            <span className={styles.navIcon}>{item.icon}</span>
+            <item.icon size={18} className={styles.navIcon} />
             <span className={styles.navLabel}>{item.label}</span>
             {activeView === item.id && <span className={styles.activeDot} />}
           </button>

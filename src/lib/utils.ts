@@ -54,48 +54,36 @@ export function percentage(value: number, total: number): number {
   return clamp(Math.round((value / total) * 100), 0, 100);
 }
 
-/** Category emoji icons map */
-export const CATEGORY_ICONS: Record<string, string> = {
-  'Jedzenie': '🍕',
-  'Czynsz/Hipoteka': '🏠',
-  'Transport': '🚗',
-  'Rozrywka': '🎬',
-  'Zdrowie': '💊',
-  'Edukacja': '📚',
-  'Ubrania': '👗',
-  'Rachunki': '⚡',
-  'Oszczędności': '💰',
-  'Inne': '📦',
-  'Wynagrodzenie': '💼',
-  'Freelance': '💻',
-  'Inwestycje': '📈',
-  'Alimenty': '👨‍👧',
-  'Zasiłek': '🏛️',
-};
+/** Get initials for avatar */
+export function getInitials(name: string): string {
+  const parts = name.trim().split(' ');
+  if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
 
-/** Category colors */
+/** Professional color palette */
 export const CATEGORY_COLORS: Record<string, string> = {
-  'Jedzenie': '#f59e0b',
-  'Czynsz/Hipoteka': '#4f8ef7',
-  'Transport': '#8b5cf6',
-  'Rozrywka': '#ec4899',
-  'Zdrowie': '#10d9a0',
-  'Edukacja': '#06b6d4',
-  'Ubrania': '#f97316',
-  'Rachunki': '#eab308',
-  'Oszczędności': '#22c55e',
-  'Inne': '#94a3b8',
-  'Wynagrodzenie': '#10d9a0',
-  'Freelance': '#4f8ef7',
-  'Inwestycje': '#22c55e',
-  'Alimenty': '#8b5cf6',
-  'Zasiłek': '#06b6d4',
+  'Jedzenie': '#D4A373',
+  'Czynsz/Hipoteka': '#4A6FA5',
+  'Transport': '#6E8898',
+  'Rozrywka': '#9E768F',
+  'Zdrowie': '#5D737E',
+  'Edukacja': '#8B94A3',
+  'Ubrania': '#B08493',
+  'Rachunki': '#D0A352',
+  'Oszczędności': '#688E75',
+  'Inne': '#636975',
+  'Wynagrodzenie': '#688E75',
+  'Freelance': '#4A6FA5',
+  'Inwestycje': '#5D737E',
+  'Alimenty': '#8B94A3',
+  'Zasiłek': '#B08493',
 };
 
-export const AVATAR_OPTIONS = ['👨', '👩', '👧', '👦', '👴', '👵', '🧑', '👶', '🐶', '🐱'];
 export const COLOR_OPTIONS = [
-  '#4f8ef7', '#ec4899', '#10d9a0', '#f59e0b',
-  '#8b5cf6', '#f97316', '#06b6d4', '#ef4444',
+  '#4A6FA5', '#6E8898', '#9E768F', '#5D737E',
+  '#8B94A3', '#B08493', '#D0A352', '#688E75',
+  '#D4A373', '#636975'
 ];
 
 export const EXPENSE_CATEGORIES = [
