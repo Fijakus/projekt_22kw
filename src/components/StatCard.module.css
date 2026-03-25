@@ -1,0 +1,61 @@
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  animation: fadeIn 0.4s ease both;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+}
+.card:hover { transform: translateY(-3px); border-color: var(--border-hover); background: var(--bg-card-hover); }
+
+/* Accent top border */
+.green::before { background: linear-gradient(90deg, var(--accent-green), #06d6a0); }
+.red::before { background: linear-gradient(90deg, var(--accent-red), #ff6b6b); }
+.blue::before { background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); }
+.orange::before { background: linear-gradient(90deg, var(--accent-orange), #fbbf24); }
+.purple::before { background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink)); }
+
+/* Icon */
+.top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.iconWrap {
+  width: 42px; height: 42px;
+  border-radius: var(--radius-md);
+  background: var(--bg-glass);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+}
+.green .iconWrap { background: rgba(16,217,160,0.1); border-color: rgba(16,217,160,0.2); }
+.red .iconWrap { background: rgba(240,82,82,0.1); border-color: rgba(240,82,82,0.2); }
+.blue .iconWrap { background: rgba(79,142,247,0.1); border-color: rgba(79,142,247,0.2); }
+.orange .iconWrap { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.2); }
+.purple .iconWrap { background: rgba(139,92,246,0.1); border-color: rgba(139,92,246,0.2); }
+
+.icon { font-size: 1.3rem; }
+
+/* Trend  */
+.trend { font-size: 0.72rem; font-weight: 700; padding: 3px 8px; border-radius: 9999px; }
+.trendUp { background: rgba(16,217,160,0.12); color: var(--accent-green); }
+.trendDown { background: rgba(240,82,82,0.12); color: var(--accent-red); }
+
+/* Value */
+.value {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+}
+.label { font-size: 0.8rem; color: var(--text-secondary); font-weight: 500; }
+.subtitle { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
