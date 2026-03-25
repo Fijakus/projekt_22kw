@@ -183,13 +183,13 @@ export default function GoalsView() {
                 <div className="progress-fill" style={{ width: `${progress}%`, backgroundColor: g.color }} />
               </div>
 
-              <div className="flex items-center justify-between gap-4 p-3" style={{ background: 'var(--bg-primary)', borderRadius: '8px', border: '1px solid var(--border)' }}>
+              <div className="flex items-center justify-between gap-4 p-3" style={{ background: 'var(--bg-card-hover)', borderRadius: '8px', border: '1px solid var(--border)' }}>
                 <label style={{ margin: 0, fontSize: '0.85rem' }}>Zaktualizuj stan:</label>
                 <input 
                   type="number" 
                   value={g.savedAmount} 
                   onChange={e => handleUpdateSaved(g.id, e.target.value)}
-                  style={{ padding: '8px 12px', fontSize: '0.9rem', width: '130px', background: 'var(--bg-secondary)' }}
+                  style={{ padding: '8px 12px', fontSize: '0.9rem', width: '130px', background: 'var(--bg-card)' }}
                 />
               </div>
             </div>

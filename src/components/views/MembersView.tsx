@@ -111,7 +111,7 @@ export default function MembersView() {
 
               <div className="divider" style={{ borderTop: '1px solid var(--border)' }} />
               
-              <div className="flex-col gap-2 p-2 rounded" style={{ background: 'var(--bg-primary)' }}>
+              <div className="flex-col gap-2 p-3 rounded" style={{ background: 'var(--bg-card-hover)', border: '1px solid var(--border)' }}>
                 <span className="text-secondary text-xs uppercase font-bold" style={{ letterSpacing: '0.05em' }}>Miesięczne Koszty</span>
                 <span className="text-2xl font-bold" style={{ color: 'var(--text-primary)'}}>
                   {formatCurrency(exp)}
