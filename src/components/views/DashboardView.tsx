@@ -107,12 +107,12 @@ export default function DashboardView() {
 
         <div className="card">
           <h3 style={{ marginBottom: '24px', fontWeight: 600, fontSize: '1.05rem', color: 'var(--text-primary)' }}>Postęp celów</h3>
-          <div className="flex-col gap-6">
+          <div className="flex-col" style={{ gap: '36px' }}>
             {state.goals.length > 0 ? state.goals.map(g => {
               const prog = Math.min((g.savedAmount / g.targetAmount) * 100, 100);
               return (
                 <div key={g.id}>
-                  <div className="flex justify-between items-center mb-2">
+                  <div className="flex justify-between items-center mb-3">
                     <span className="text-sm font-bold" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <span style={{ color: g.color }}><IconComponent iconName={g.icon} /></span>
                       {g.name}
