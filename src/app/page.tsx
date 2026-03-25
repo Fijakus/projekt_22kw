@@ -1,66 +1,60 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+
+import { useState } from 'react';
+import Sidebar from '@/components/Sidebar';
+import DashboardView from '@/components/views/DashboardView';
+import TransactionsView from '@/components/views/TransactionsView';
+import TransactionForm from '@/components/TransactionForm';
+
+import MembersView from '@/components/views/MembersView';
+import GoalsView from '@/components/views/GoalsView';
+import LimitsView from '@/components/views/LimitsView';
 
 export default function Home() {
+  const [activeView, setActiveView] = useState('dashboard');
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const renderView = () => {
+    switch (activeView) {
+      case 'dashboard': return <DashboardView />;
+      case 'transactions': return <TransactionsView />;
+      case 'members': return <MembersView />;
+      case 'goals': return <GoalsView />;
+      case 'limits': return <LimitsView />;
+      default: return <DashboardView />;
+    }
+  };
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="flex" style={{ backgroundColor: 'var(--bg-primary)' }}>
+      <Sidebar activeView={activeView} onViewChange={setActiveView} />
+      
+      <main style={{ flex: 1, height: '100vh', overflowY: 'auto' }}>
+        <header style={{ 
+          display: 'flex', 
+          justifyContent: 'flex-end', 
+          alignItems: 'center', 
+          padding: '16px 32px',
+          borderBottom: '1px solid var(--border)',
+          background: 'var(--bg-secondary)',
+          position: 'sticky',
+          top: 0,
+          zIndex: 10
+        }}>
+          <button 
+            className="btn-primary"
+            onClick={() => setIsFormOpen(true)}
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+            + Dodaj transakcję
+          </button>
+        </header>
+
+        {renderView()}
       </main>
+
+      {isFormOpen && (
+        <TransactionForm onClose={() => setIsFormOpen(false)} />
+      )}
     </div>
   );
 }
